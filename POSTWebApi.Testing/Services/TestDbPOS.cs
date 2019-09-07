@@ -67,7 +67,7 @@ namespace POSTWebApi.Testing.Services
 
         public DbSet<SaleRequest> SaleRequests { get; set; }
 
-        public Database Database { get; set; }
+        public Database Database { get; }
 
         public void Dispose()
         {

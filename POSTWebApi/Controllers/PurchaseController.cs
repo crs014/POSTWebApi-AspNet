@@ -7,11 +7,28 @@ using System.Web.Http;
 using POSTWebApi.ViewModels.Entity;
 using POSTWebApi.Services.Attributes;
 using System.Threading.Tasks;
+using POSTWebApi.Repository;
+using POSTWebApi.Services.Interfaces;
 
 namespace POSTWebApi.Controllers
 {
     public class PurchaseController : BaseApiController<Purchase>
     {
+        /*
+        * @description : Constructor class for production and development side
+        */
+        public PurchaseController()
+        {
+
+        }
+
+        /*
+        * @description : Constructor class for testing or unit test
+        */
+        public PurchaseController(IDbPOS context)
+        {
+            purchaseRepository = new PurchaseRepository(context);
+        }
 
         [HttpPost]
         [ActionName("Index")]

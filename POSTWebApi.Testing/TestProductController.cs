@@ -24,7 +24,7 @@ namespace POSTWebApi.Testing
 
         public TestProductController()
         {
-            #region load dummy
+            #region load dummy data
             storeAppContext = new TestDbPOS();
             storeAppContext.Products.Add(new Product()
             {

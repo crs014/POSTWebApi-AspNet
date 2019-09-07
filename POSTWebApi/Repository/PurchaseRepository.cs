@@ -129,11 +129,15 @@ namespace POSTWebApi.Repository
                     .Include(e => e.Supplier)
                     .Include(e => e.User.UserRoles.Select(a => a.Role))
                     .Where(e => e.DeletedAt == null).FirstOrDefault();
-                purchase.SupplierId = data.SupplierId;
-                purchase.UserId = data.UserId;
-                purchase.UpdatedAt = DateTime.UtcNow;
-                _db.SaveChanges();
-                return purchase;
+                if (purchase != null)
+                {
+                    purchase.SupplierId = data.SupplierId;
+                    purchase.UserId = data.UserId;
+                    purchase.UpdatedAt = DateTime.UtcNow;
+                    _db.SaveChanges();
+                    return purchase;
+                }
+                return null;
             });
         }
     }
