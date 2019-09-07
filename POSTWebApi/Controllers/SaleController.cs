@@ -1,6 +1,8 @@
 ﻿using POSTWebApi.Models;
+using POSTWebApi.Repository;
 using POSTWebApi.Services;
 using POSTWebApi.Services.Attributes;
+using POSTWebApi.Services.Interfaces;
 using POSTWebApi.ViewModels.Entity;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,22 @@ namespace POSTWebApi.Controllers
 {
     public class SaleController : BaseApiController<Sale>
     {
+        /*
+        * @description : Constructor class for production and development side
+        */
+        public SaleController()
+        {
+
+        }
+
+        /*
+        * @description : Constructor class for testing or unit test
+        */
+        public SaleController(IDbPOS context)
+        {
+            saleRepository = new SaleRepository(context);
+        }
+
         [HttpPost]
         [ActionName("Index")]
         [JWTAuth(ConstantValue.FeatureValue.CREATE_SALE)]

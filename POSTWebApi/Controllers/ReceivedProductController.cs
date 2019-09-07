@@ -1,6 +1,8 @@
 ﻿using POSTWebApi.Models;
+using POSTWebApi.Repository;
 using POSTWebApi.Services;
 using POSTWebApi.Services.Attributes;
+using POSTWebApi.Services.Interfaces;
 using POSTWebApi.ViewModels.Entity;
 using System;
 using System.Collections.Generic;
@@ -14,6 +16,29 @@ namespace POSTWebApi.Controllers
 {
     public class ReceivedProductController : BaseApiController<ReceivedProduct>
     {
+
+        /*
+         * @description : Property for put data user login for testing and production
+         */
+        protected UserViewModel userDataLogin;
+
+        /*
+        * @description : Constructor class for production and development side
+        */
+        public ReceivedProductController()
+        {
+
+        }
+
+        /*
+        * @description : Constructor class for testing or unit test
+        */
+        public ReceivedProductController(IDbPOS context, User user)
+        {
+            userDataLogin = new UserViewModel(user);
+            receivedProductRepository = new ReceivedProductRepository(context);
+        }
+
         [HttpPost]
         [ActionName("Index")]
         [JWTAuth(ConstantValue.FeatureValue.CREATE_RECEIPT_OF_PRODUCT)]
@@ -21,11 +46,14 @@ namespace POSTWebApi.Controllers
         {
             try
             {
-                UserViewModel user = GetUserAuth();
-                dataBody.UserId = user.Id;
+                if(GetUserAuth() != null)
+                {
+                    userDataLogin = GetUserAuth();
+                }
+                dataBody.UserId = userDataLogin.Id;
                 ReceivedProduct receivedProduct = await receivedProductRepository.Create(dataBody);
                 ReceivedProductViewModel receivedProductViewModel = new ReceivedProductViewModel(receivedProduct);
-                receivedProductViewModel.User = user;
+                receivedProductViewModel.User = userDataLogin;
 
                 return new HttpJsonApiResult<ReceivedProductViewModel>(
                     receivedProductViewModel, Request, HttpStatusCode.Created);
@@ -108,6 +136,11 @@ namespace POSTWebApi.Controllers
             try
             {
                 IEnumerable<ReceivedProduct> receivedProducts = await Task.FromResult(receivedProductRepository.Get(id));
+
+                if (receivedProducts == null || receivedProducts.Count() == 0)
+                {
+                    return new HttpJsonApiResult<string>("Not Found", Request, HttpStatusCode.NotFound);
+                }
 
                 return new HttpJsonApiResult<IEnumerable<ReceivedProductViewModel>>(
                      ReceivedProductViewModel.GetAll(receivedProducts),

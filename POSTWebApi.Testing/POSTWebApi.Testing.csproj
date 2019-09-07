@@ -68,7 +68,9 @@
   <ItemGroup>
     <Compile Include="TestProductController.cs" />
     <Compile Include="TestPurchaseController.cs" />
+    <Compile Include="TestReceivedProductController.cs" />
     <Compile Include="TestRoleController.cs" />
+    <Compile Include="TestSaleController.cs" />
     <Compile Include="TestSupplierController.cs" />
     <Compile Include="TestCategoryController.cs" />
     <Compile Include="DbSet\TestCategoryDbSet.cs" />

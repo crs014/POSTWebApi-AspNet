@@ -136,10 +136,14 @@ namespace POSTWebApi.Repository
                 Sale sale = _db.Sales.Where(e => e.Id == id)
                     .Include(e => e.User.UserRoles.Select(a => a.Role))
                     .Where(e => e.DeletedAt == null).FirstOrDefault();
-                sale.UserId = data.UserId;
-                sale.UpdatedAt = DateTime.UtcNow;
-                _db.SaveChanges();
-                return sale;
+                if (sale != null)
+                {
+                    sale.UserId = data.UserId;
+                    sale.UpdatedAt = DateTime.UtcNow;
+                    _db.SaveChanges();
+                    return sale;
+                }
+                return null;
             });
         }
     }
