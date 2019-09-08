@@ -1,0 +1,2410 @@
+{
+	"info": {
+		"_postman_id": "e9aa554d-e09c-458e-888c-513b4e167dc6",
+		"name": "POS-ASP-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Read List User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User?Skip=0&Limit=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Index/225c1379-e5d1-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Index",
+								"225c1379-e5d1-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted List User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Deleted?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Self",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Self",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Self"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "72b9dbef-506b-4181-be6c-aaaf0ccd989d",
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff49bdd4-f03d-4c56-abab-d9ffcd7b44c5",
+								"exec": [
+									"if(pm.response.code === 200) {",
+									"    pm.environment.set('authToken', pm.response.json().Data.Token)",
+									"    pm.environment.set('refreshToken', pm.response.json().Data.RefreshToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Email\" : \"su@super.com\",\n\t\"Password\" : \"123456\",\n\t\"DeviceNumber\" : \"PTX23121\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Refresh Token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "32b9fc82-d6e0-4c79-965e-b27946348eee",
+								"exec": [
+									"if(pm.response.code === 200) {",
+									"    pm.environment.set('authToken', pm.response.json().Data.Token)",
+									"    pm.environment.set('refreshToken', pm.response.json().Data.RefreshToken)",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Token\" : \"{{refreshToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User/RefreshToken",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"RefreshToken"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Email\" : \"cristonosantuy@gmail.com\",\n\t\"Password\" : \"123456\",\n\t\"Name\" : \"Cristono\",\n\t\"Gender\" : 0,\n\t\"Phone\" : \"089693100464\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Token\" : \"{{authToken}}\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Logout",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout All",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/LogoutAll",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"LogoutAll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Password\" : \"123456\",\n\t\"Name\": \"Cristono\",\n\t\"Phone\": \"089693100469\",\n\t\"Gender\": 1\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Index/f210c0d0-e6d1-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Index",
+								"f210c0d0-e6d1-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Index/f210c0d0-e6d1-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Index",
+								"f210c0d0-e6d1-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/User/Hard/f210c0d0-e6d1-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"User",
+								"Hard",
+								"f210c0d0-e6d1-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Role",
+			"item": [
+				{
+					"name": "Read List Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Role?Skip=0&Limit=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted List Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Deleted?Skip=2&Page=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "2"
+								},
+								{
+									"key": "Page",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Index/f79cb651-dbba-4dfa-961b-c67034471f2c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Index",
+								"f79cb651-dbba-4dfa-961b-c67034471f2c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Manager\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Index/f79cb651-dbba-4dfa-961b-c67034471f2c",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Index",
+								"f79cb651-dbba-4dfa-961b-c67034471f2c"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Sales\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Index/86acaaa5-e93d-4eaf-8302-55eadffa44c7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Index",
+								"86acaaa5-e93d-4eaf-8302-55eadffa44c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Index/86acaaa5-e93d-4eaf-8302-55eadffa44c7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Index",
+								"86acaaa5-e93d-4eaf-8302-55eadffa44c7"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Role",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Role/Hard/86acaaa5-e93d-4eaf-8302-55eadffa44c7",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Role",
+								"Hard",
+								"86acaaa5-e93d-4eaf-8302-55eadffa44c7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Category",
+			"item": [
+				{
+					"name": "Read List Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Category?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Category/index/7a90e422-efbb-e911-936b-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category",
+								"index",
+								"7a90e422-efbb-e911-936b-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted Category List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Category/Deleted?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Senjata Tajam\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Category",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Medicine\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Category/index/7a90e422-efbb-e911-936b-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category",
+								"index",
+								"7a90e422-efbb-e911-936b-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Category/index/7a90e422-efbb-e911-936b-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category",
+								"index",
+								"7a90e422-efbb-e911-936b-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Category",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Category/Hard/7a90e422-efbb-e911-936b-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Category",
+								"Hard",
+								"7a90e422-efbb-e911-936b-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Supplier",
+			"item": [
+				{
+					"name": "Read List Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier/Deleted?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier/Index/8acd164c-29be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier",
+								"Index",
+								"8acd164c-29be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"PT BTM\",\n\t\"Address\" : \"Jalan Tak Maju\",\n\t\"Phone\" : \"41212412\",\n\t\"Description\" : \"Ini cuma dummy company\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"PT BTM WKWKWKW\",\n\t\"Address\" : \"Jalan Tak Maju Mundur\",\n\t\"Phone\" : \"4121241277\",\n\t\"Description\" : \"Ini cuma dummy company aja ya\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier/Index/8acd164c-29be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier",
+								"Index",
+								"8acd164c-29be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier/Index/8acd164c-29be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier",
+								"Index",
+								"8acd164c-29be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Supplier",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Supplier/Hard/8acd164c-29be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Supplier",
+								"Hard",
+								"8acd164c-29be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "Category",
+					"item": [
+						{
+							"name": "Create Product Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Categories\" : [\n\t\t\"2ec6da30-ebd1-e911-9371-54ee75f8b29e\"\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/Category/40c3dee1-e9d1-e911-9371-54ee75f8b29e",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"Category",
+										"40c3dee1-e9d1-e911-9371-54ee75f8b29e"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Deleted Product Category",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\t\n\t\"Categories\" : [\n\t\t\"3cae84ce-e9d1-e911-9371-54ee75f8b29e\"\n\t]\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/Category/40c3dee1-e9d1-e911-9371-54ee75f8b29e",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"Category",
+										"40c3dee1-e9d1-e911-9371-54ee75f8b29e"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Price",
+					"item": [
+						{
+							"name": "Read List Sale Price",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/SalePrice?Skip=0&Limit=5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"SalePrice"
+									],
+									"query": [
+										{
+											"key": "Skip",
+											"value": "0"
+										},
+										{
+											"key": "Limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Read List Purchase Price",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/PurchasePrice?Skip=0&Limit=5",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"PurchasePrice"
+									],
+									"query": [
+										{
+											"key": "Skip",
+											"value": "0"
+										},
+										{
+											"key": "Limit",
+											"value": "5"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Sale Price",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Value\" : 30000,\n\t\"ProductId\" : \"40c3dee1-e9d1-e911-9371-54ee75f8b29e\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/SalePrice",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"SalePrice"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Purchase Price",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{authToken}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n\t\"Value\" : 20000,\n\t\"ProductId\" : \"40c3dee1-e9d1-e911-9371-54ee75f8b29e\"\n}"
+								},
+								"url": {
+									"raw": "{{url}}/api/Product/PurchasePrice",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"Product",
+										"PurchasePrice"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"_postman_isSubFolder": true
+				},
+				{
+					"name": "Read List Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Product?Skip=0&Limit=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Product/Deleted?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Product/Index/40c3dee1-e9d1-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Index",
+								"40c3dee1-e9d1-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Pedang\",\n\t\"Description\" : \"Benda Tajam\",\n\t\"CodeProduct\" : \"123tqttq\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Product",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\" : \"Hapus Sekarang\",\n\t\"Description\" : \"Hapus Sekarang juga\",\n\t\"CodeProduct\" : \"code 2312312\"\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Product/Index/acf1809c-76be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Index",
+								"acf1809c-76be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Product/Index/acf1809c-76be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Index",
+								"acf1809c-76be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Product/Hard/38787344-75be-e911-936c-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Product",
+								"Hard",
+								"38787344-75be-e911-936c-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Purchase",
+			"item": [
+				{
+					"name": "Read List Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase?Skip=0&Limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Deleted Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase/Deleted?Skip=0&Limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase",
+								"Deleted"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase/Index/ff12a4fa-e4c7-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase",
+								"Index",
+								"ff12a4fa-e4c7-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"SupplierId\" : \"288f82f4-e4c7-e911-9371-54ee75f8b29e\",\n\t\"ProductDetails\" : [\n\t\t{\n\t\t\t\"ProductId\" : \"4e5b58cd-e4c7-e911-9371-54ee75f8b29e\",\n\t\t\t\"Quantity\" : 1\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase/Index/e9cbe6f7-13c3-e911-936e-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase",
+								"Index",
+								"e9cbe6f7-13c3-e911-936e-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Purchase",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Purchase/Hard/71906a9e-34c3-e911-936e-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Purchase",
+								"Hard",
+								"71906a9e-34c3-e911-936e-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Received Product",
+			"item": [
+				{
+					"name": "Read List Received Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/ReceivedProduct?Skip=0&Limit=2",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ReceivedProduct"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Received Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/ReceivedProduct/Index/565b3cdd-36c3-e911-936e-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ReceivedProduct",
+								"Index",
+								"565b3cdd-36c3-e911-936e-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Received Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"ProductDetailID\" : \"0013a4fa-e4c7-e911-9371-54ee75f8b29e\",\n\t\"Quantity\" : 5\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/ReceivedProduct",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ReceivedProduct"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Received Product",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/ReceivedProduct/Index/d4b56ab7-e7c4-e911-9370-d46d6d6603ab",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"ReceivedProduct",
+								"Index",
+								"d4b56ab7-e7c4-e911-9370-d46d6d6603ab"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Sale",
+			"item": [
+				{
+					"name": "Read List Sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Sale?Skip=0&Limit=10",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Sale"
+							],
+							"query": [
+								{
+									"key": "Skip",
+									"value": "0"
+								},
+								{
+									"key": "Limit",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Read Sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Sale/Index/f5fde5fd-fdc7-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Sale",
+								"Index",
+								"f5fde5fd-fdc7-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"SaleDetails\" : [\n\t\t{\n\t\t\t\"ProductDetailId\" : \"0013a4fa-e4c7-e911-9371-54ee75f8b29e\",\n\t\t\t\"Quantity\" : 2\n\t\t}\n\t]\n}"
+						},
+						"url": {
+							"raw": "{{url}}/api/Sale",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Sale"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Soft Delete Sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Sale/Index/f5fde5fd-fdc7-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Sale",
+								"Index",
+								"f5fde5fd-fdc7-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Hard Delete Sale",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{authToken}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/api/Sale/Hard/f5fde5fd-fdc7-e911-9371-54ee75f8b29e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"Sale",
+								"Hard",
+								"f5fde5fd-fdc7-e911-9371-54ee75f8b29e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
