@@ -256,6 +256,10 @@
     <Compile Include="Migrations\201908250721311_InitialFirst.Designer.cs">
       <DependentUpon>201908250721311_InitialFirst.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201909080304598_Second Initial.cs" />
+    <Compile Include="Migrations\201909080304598_Second Initial.Designer.cs">
+      <DependentUpon>201909080304598_Second Initial.cs</DependentUpon>
+    </Compile>
     <Compile Include="Repository\CategoryRepository.cs" />
     <Compile Include="Repository\Interface\ICategoryRepository.cs" />
     <Compile Include="Repository\Interface\IPriceRepository.cs" />
@@ -345,6 +349,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201908250721311_InitialFirst.resx">
       <DependentUpon>201908250721311_InitialFirst.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201909080304598_Second Initial.resx">
+      <DependentUpon>201909080304598_Second Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

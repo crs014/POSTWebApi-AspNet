@@ -19,7 +19,6 @@ namespace POSTWebApi.Repository
 
         public IEnumerable<ProductCategory> Create(IEnumerable<ProductCategory> productCategories)
         {
-            _db.ProductCategories.Add(new ProductCategory());
             _db.ProductCategories.AddRange(productCategories);
             _db.SaveChanges();
             return productCategories;

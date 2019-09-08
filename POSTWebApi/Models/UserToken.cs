@@ -17,7 +17,8 @@ namespace POSTWebApi.Models
         public Guid UserId { get; set; }
 
         [Required]
-        [Column(TypeName = "text")]
+        [Column(TypeName = "VARCHAR")]
+        [MaxLength(255)]
         [Index(IsUnique = true)]
         public string DeviceNumber { get; set; }
 
